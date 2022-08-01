@@ -15,6 +15,8 @@ public class EnemyStateMachine : MonoBehaviour
     private static StateBehavior[] _StatesAvailable = new StateBehavior[]{};
     private static StateBehavior _CurState = null;
 
+    public delegate void StateDelegate(State newState);
+    public static StateDelegate onNewState;
     private void Awake()
     {
         if (_StatesAvailable.Length <= 0)
@@ -32,7 +34,6 @@ public class EnemyStateMachine : MonoBehaviour
     {
         if (IsStateRunning())
         {
-            Debug.Log($"OnStateUpdate [{_CurState.GetType()}]");
             _CurState.OnStateUpdate();
         }
     }
@@ -53,6 +54,10 @@ public class EnemyStateMachine : MonoBehaviour
         }
 
         _CurState = wantedStateBehavior;
+        if(onNewState != null)
+        {
+            onNewState.Invoke(_CurState.GetState());
+        }
         Debug.Log($"OnStateEnter [{_CurState.GetType()}]");
         _CurState.OnStateEnter();
     }

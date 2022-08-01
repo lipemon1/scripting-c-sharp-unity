@@ -23,18 +23,12 @@ public class PlayerDetectionBehavior : MonoBehaviour
             int layerMask = 1 << 6;
 
             RaycastHit hit;
-            if (Physics.Raycast(m_Enemy.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMask))
+            if (Physics.Raycast(m_Player.position, m_Enemy.position - m_Player.position, out hit, Mathf.Infinity, layerMask))
             {
-                Debug.DrawRay(m_Enemy.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                if(Vector3.Distance(hit.collider.transform.position, m_Enemy.position) > Vector3.Distance(m_Player.position, m_Enemy.position))
+                Debug.DrawRay(m_Player.position, m_Enemy.position - m_Player.position, Color.yellow);
+                if (hit.collider.gameObject.CompareTag("Enemy"))
                 {
-                    TryRequestChaseState();
-                }
-            }
-            else
-            {
-                if (m_PlayerOnSight)
-                {
+                    Debug.DrawRay(m_Player.position, m_Enemy.position - m_Player.position, Color.red);
                     TryRequestChaseState();
                 }
             }
@@ -60,6 +54,7 @@ public class PlayerDetectionBehavior : MonoBehaviour
             }
             
             m_PlayerOnSight = false;
+            m_RequestedState = false;
         }
     }
 }
