@@ -27,6 +27,10 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void Start()
     {
+        foreach (StateBehavior stateBehavior in _StatesAvailable)
+        {
+            stateBehavior.PrepareState();
+        }
         RequestState(m_InitialState);
     }
 

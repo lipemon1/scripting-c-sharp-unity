@@ -6,6 +6,7 @@ public abstract class StateBehavior : MonoBehaviour
     public abstract void OnStateEnter();
     public abstract void OnStateUpdate();
     public abstract void OnStateExit();
+    public virtual void PrepareState() {}
 
     public State GetState()
     {

@@ -10,6 +10,12 @@ public class PatrolStateBehavior : StateBehavior
     [Space]
     [SerializeField] private NavMeshAgent m_Agent;
 
+    public override void PrepareState()
+    {
+        base.PrepareState();
+        m_WantedPositions = GameLoopControl.Instance.GetPatrolPosition();
+    }
+
     public override void OnStateEnter()
     {
         m_CurWantedPositionIndex = Random.Range(0, m_WantedPositions.Length);
