@@ -11,7 +11,7 @@ public enum State
 
 public class EnemyStateMachine : MonoBehaviour
 {
-    [SerializeField] private State m_InitialState;
+    [SerializeField] private State m_InitialState = State.Idle;
     private static StateBehavior[] _StatesAvailable = new StateBehavior[]{};
     private static StateBehavior _CurState = null;
 
@@ -19,10 +19,7 @@ public class EnemyStateMachine : MonoBehaviour
     public static StateDelegate onNewState;
     private void Awake()
     {
-        if (_StatesAvailable.Length <= 0)
-        {
-            _StatesAvailable = transform.GetComponents<StateBehavior>();
-        }
+        _StatesAvailable = transform.GetComponents<StateBehavior>();
     }
 
     private void Start()

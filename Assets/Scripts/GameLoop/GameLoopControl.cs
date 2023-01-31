@@ -46,10 +46,16 @@ public class GameLoopControl : SingletonMonobehavior<GameLoopControl>
             if (enemy)
             {
                 enemy.GetComponent<EnemyStateMachine>().enabled = true;
+                enemy.GetComponentInChildren<PlayerCloseDetectionBehavior>().PrepareGameOver(OnGameOver);
             }
             
             m_LevelInstance.gameObject.SetActive(true);
             m_PatrolPositionInstance.gameObject.SetActive(true);
         }
+    }
+    
+    private void OnGameOver()
+    {
+        GameOverUIController.Instance.Show();
     }
 }

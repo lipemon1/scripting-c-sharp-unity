@@ -10,6 +10,11 @@ public class MaterialColorChangeComponent : MonoBehaviour
 		_initialAlphaValue = m_MeshRenderer.material.color.a;
 		EnemyStateMachine.onNewState += OnNewState;
 	}
+	
+	private void OnDestroy()
+	{
+		EnemyStateMachine.onNewState -= OnNewState;
+	}
 
 	private void OnNewState(State newState)
 	{
